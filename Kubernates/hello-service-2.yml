@@ -1,0 +1,26 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: hello-kube-service-2
+spec:
+  selector:
+    app: hello-kube-2
+  ports:
+  - protocol: TCP
+    port: 80
+    targetPort: 8080
+#    nodePort: 30001
+  type: LoadBalancer
+
+#kind: Service
+#apiVersion: v1
+#metadata:
+#  name: hello-kube-service
+#spec:
+#  selector:
+#    app: hello-kube
+#  ports:
+#  - protocol: TCP
+#    port: 8080
+#    nodePort: 30001
+#  type: NodePort

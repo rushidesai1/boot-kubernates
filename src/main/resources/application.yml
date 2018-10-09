@@ -1,0 +1,20 @@
+management.endpoints.web.exposure.include: "*"
+
+app:
+  kube:
+    env:
+      hello_kube_service_service_port: ${HELLO_KUBE_SERVICE_SERVICE_PORT}
+      hello_kube_service_port_8080_tcp_addr: ${HELLO_KUBE_SERVICE_PORT_8080_TCP_ADDR}
+      kubernetes_service_port: ${KUBERNETES_SERVICE_PORT}
+      kubernetes_port_443_tcp_proto: ${KUBERNETES_PORT_443_TCP_PROTO}
+      kubernetes_port_443_tcp_addr: ${KUBERNETES_PORT_443_TCP_ADDR}
+      kubernetes_service_port_https: ${KUBERNETES_SERVICE_PORT_HTTPS}
+      hello_kube_service_service_host: ${HELLO_KUBE_SERVICE_SERVICE_HOST}
+      hello_kube_service_port_8080_tcp: ${HELLO_KUBE_SERVICE_PORT_8080_TCP}
+      hello_kube_service_port_8080_tcp_port: ${HELLO_KUBE_SERVICE_PORT_8080_TCP_PORT}
+      kubernetes_port_443_tcp: ${KUBERNETES_PORT_443_TCP}
+      kubernetes_port_443_tcp_port: ${KUBERNETES_PORT_443_TCP_PORT}
+      hello_kube_service_port: ${HELLO_KUBE_SERVICE_PORT}
+      hello_kube_service_port_8080_tcp_proto: ${HELLO_KUBE_SERVICE_PORT_8080_TCP_PROTO}
+      kubernetes_service_host: ${KUBERNETES_SERVICE_HOST}
+      kubernetes_port: ${KUBERNETES_PORT}

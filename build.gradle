@@ -1,0 +1,62 @@
+buildscript {
+    ext {
+        springBootVersion = '2.0.5.RELEASE'
+    }
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+    }
+}
+
+apply plugin: 'java'
+apply plugin: 'eclipse'
+apply plugin: 'org.springframework.boot'
+apply plugin: 'io.spring.dependency-management'
+
+group = 'rushi.cloud.poc'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = 1.8
+
+repositories {
+    mavenCentral()
+}
+
+
+ext {
+    springBootAdminVersion = '2.0.3'
+}
+
+dependencies {
+    implementation('org.springframework.boot:spring-boot-starter-actuator')
+//    implementation('org.springframework.boot:spring-boot-starter-data-jpa')
+//    implementation('org.springframework.boot:spring-boot-starter-hateoas')
+    implementation('org.springframework.boot:spring-boot-starter-webflux')
+    implementation('de.codecentric:spring-boot-admin-starter-server')
+    runtimeOnly('org.springframework.boot:spring-boot-devtools')
+//    runtimeOnly('com.h2database:h2')
+    compileOnly('org.projectlombok:lombok')
+    testImplementation('org.springframework.boot:spring-boot-starter-test')
+    testImplementation('io.projectreactor:reactor-test')
+    testImplementation('org.springframework.restdocs:spring-restdocs-mockmvc')
+}
+
+dependencyManagement {
+    imports {
+        mavenBom "de.codecentric:spring-boot-admin-dependencies:${springBootAdminVersion}"
+    }
+}
+
+task copyJarToDocker(type: Copy) {
+    copy {
+        from jar.archivePath
+        into 'Docker'
+    }
+}
+
+task finalize << {
+    copyJarToDocker()
+}
+
+build.finalizedBy(finalize)

@@ -1,0 +1,41 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: hello-kube-deployment-2
+  labels:
+    app: hello-kube-2
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: hello-kube-2
+  template:
+    metadata:
+      labels:
+        app: hello-kube-2
+    spec:
+      containers:
+      - name: hello-kube
+        image: hello:4
+        ports:
+        - containerPort: 8080
+        env:
+        - name: DEPLOYMENT_ID
+          value: "2"
+        envFrom:
+        - configMapRef:
+            name: hello-config
+#        valueFrom:
+#          configMapKeyRef:
+#            name: mongodb
+#            key: database-name
+#      - name: MONGO_USERNAME
+#        valueFrom:
+#          secretKeyRef:
+#            name: mongodb
+#            key: database-user
+#      - name: MONGO_PASSWORD
+#        valueFrom:
+#          secretKeyRef:
+#            name: mongodb
+#            key: database-password
