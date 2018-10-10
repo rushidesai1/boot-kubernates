@@ -62,18 +62,45 @@ public class GreetingController {
     @GetMapping("/api/concat")
     @ResponseBody
     Mono<String> concat() {
+        try {
+            LOGGER.info("In Concat");
+            System.out.println("In Concat");
+            String deployment_id = System.getenv("DEPLOYMENT_ID");
+            String deployment_end = System.getenv("DEPLOYMENT_END");
+            int my = deployment_id != null ? Integer.parseInt(deployment_id) : -1;
+            int end = deployment_end != null ? Integer.parseInt(deployment_end) : -2;
+            LOGGER.info("my-" + my + " : " + "end-" + end);
+            System.out.println("my-" + my + " : " + "end-" + end);
+
+            if (my == end) return Mono.justOrEmpty("!");
+
+            RestTemplate restTemplate = new RestTemplate();
+            int next = my + 1;
+            String s = map.get(my) + " " + restTemplate.getForObject("http://hello-kube-service-" + next + "/api/concat", String.class);
+            System.out.println(s);
+            LOGGER.info(s);
+            return Mono.justOrEmpty(s);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return Mono.justOrEmpty("Error");
+    }
+
+    @GetMapping("/api/concat-nr")
+    @ResponseBody
+    String concatNr() {
         LOGGER.info("In Concat");
         int my = Integer.parseInt(System.getenv("DEPLOYMENT_ID"));
         int end = Integer.parseInt(System.getenv("DEPLOYMENT_END"));
         LOGGER.info("my-" + my + " : " + "end-" + end);
 
-        if (my == end) return Mono.justOrEmpty("!");
+        if (my == end) return "!";
 
         RestTemplate restTemplate = new RestTemplate();
         int next = my + 1;
         String s = map.get(my) + " " + restTemplate.getForObject("http://hello-kube-service-" + next + "/api/concat", String.class);
         System.out.println(s);
         LOGGER.info(s);
-        return Mono.justOrEmpty(s);
+        return s;
     }
 }

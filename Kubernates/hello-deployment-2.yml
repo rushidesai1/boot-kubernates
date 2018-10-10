@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
       - name: hello-kube
-        image: hello:4
+        image: hello:5
         ports:
         - containerPort: 8080
         env:
